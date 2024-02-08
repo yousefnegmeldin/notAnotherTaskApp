@@ -4,8 +4,13 @@ import Deck from "./components/Deck";
 import { createDeck } from "./api/createDeck";
 import { getDecks } from "./api/getDecks";
 function App() {
+  type deckObject = {
+    _id: string;
+    title: string;
+  };
+
   const [deckTitle, setDeckTitle] = useState<string>("");
-  const [deckArray, setDeckArray] = useState<Array<object>>([]);
+  const [deckArray, setDeckArray] = useState<Array<deckObject>>([]);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckTitle(e.target.value);
@@ -29,7 +34,7 @@ function App() {
     <div className="h-[100vh] justify-center items-center flex flex-col bg-slate-900">
       <div className="w-3/4 flex gap-4 justify-center items-center mb-10">
         {/* todo, map over array and render deck component for each one. */}
-        {deckArray.map((deck) => {
+        {deckArray.map((deck: deckObject) => {
           return (
             <div key={deck._id}>
               <Deck
