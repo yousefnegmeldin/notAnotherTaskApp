@@ -1,16 +1,11 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Deck from "./components/Deck";
+import { createDeck } from "./api/createDeck";
+import { getDecks } from "./api/getDecks";
 function App() {
   const [deckTitle, setDeckTitle] = useState<string>("");
   const [deckArray, setDeckArray] = useState<Array<object>>([]);
-
-  interface deckObject {
-    title: string;
-    _id: string;
-    __v: number;
-  }
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckTitle(e.target.value);
@@ -18,18 +13,17 @@ function App() {
 
   const handleDeckSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/decks", {
-        title: deckTitle,
-      })
-      .then((res) => console.log(res));
+    createDeck(deckTitle).then(() => refreshDecks());
+  };
+
+  const refreshDecks = async () => {
+    const decks = await getDecks();
+    setDeckArray(decks);
   };
 
   useEffect(() => {
-    axios.get("http://localhost:5000/decks").then((res) => {
-      setDeckArray(res.data);
-    });
-  }, []);
+    refreshDecks();
+  }, [deckArray]);
 
   return (
     <div className="h-[100vh] justify-center items-center flex flex-col bg-slate-900">
@@ -38,7 +32,11 @@ function App() {
         {deckArray.map((deck) => {
           return (
             <div key={deck._id}>
-              <Deck deckTitle={deck.title} />
+              <Deck
+                deckTitle={deck.title}
+                deckId={deck._id}
+                refreshDecks={refreshDecks}
+              />
             </div>
           );
         })}
