@@ -11,6 +11,7 @@ function App() {
 
   const [deckTitle, setDeckTitle] = useState<string>("");
   const [deckArray, setDeckArray] = useState<Array<deckObject>>([]);
+  const [shouldRefresh, setShouldRefresh] = useState<boolean>(true);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckTitle(e.target.value);
@@ -18,29 +19,33 @@ function App() {
 
   const handleDeckSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createDeck(deckTitle).then(() => refreshDecks());
+    createDeck(deckTitle)
+      .then(() => setShouldRefresh(true))
+      .then(() => console.log("Deck Created!"));
   };
 
-  const refreshDecks = async () => {
-    const decks = await getDecks();
-    setDeckArray(decks);
+  const fetchDecks = async () => {
+    return await getDecks();
   };
 
   useEffect(() => {
-    refreshDecks();
-  }, [deckArray]);
+    if (shouldRefresh) {
+      setShouldRefresh(false);
+      fetchDecks().then((decks) => setDeckArray([...decks]));
+      console.log("done");
+    }
+  }, [shouldRefresh]);
 
   return (
     <div className="h-[100vh] justify-center items-center flex flex-col bg-slate-900">
       <div className="w-3/4 flex gap-4 justify-center items-center mb-10">
-        {/* todo, map over array and render deck component for each one. */}
         {deckArray.map((deck: deckObject) => {
           return (
             <div key={deck._id}>
               <Deck
                 deckTitle={deck.title}
                 deckId={deck._id}
-                refreshDecks={refreshDecks}
+                setShouldRefresh={setShouldRefresh}
               />
             </div>
           );

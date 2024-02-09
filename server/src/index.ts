@@ -7,7 +7,9 @@ import {
   createDeckController,
   deleteDeckController,
   getDecksController,
-} from "./controllers/index.ts";
+  createCardInsideOfDeckController,
+  getCardsInsideOfDeckController,
+} from "./controllers/index";
 
 const port = 5000;
 const mongo_uri = process.env.MONGO_URI;
@@ -19,6 +21,8 @@ app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
 app.delete("/decks/:id", deleteDeckController);
 app.get("/decks", getDecksController);
 app.post("/decks", createDeckController);
+app.post("/decks/:id/cards", createCardInsideOfDeckController);
+app.get("/decks/:id/cards", getCardsInsideOfDeckController);
 
 mongoose.connect(mongo_uri as string).then(() => {
   console.log(`connected on port ${port}`);

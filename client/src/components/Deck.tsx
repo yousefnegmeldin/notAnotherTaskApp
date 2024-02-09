@@ -5,12 +5,12 @@ import { deleteDeck } from "../api/deleteDeck";
 interface DeckProps {
   deckTitle: string;
   deckId: string;
-  refreshDecks: () => void;
+  setShouldRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Deck: FC<DeckProps> = ({ deckTitle, deckId, refreshDecks }) => {
+const Deck: FC<DeckProps> = ({ deckTitle, deckId, setShouldRefresh }) => {
   const handleDeleteDeck = () => {
-    deleteDeck(deckId).then(refreshDecks()!);
+    deleteDeck(deckId).then(() => setShouldRefresh((prev) => !prev));
   };
 
   return (
