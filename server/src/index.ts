@@ -9,6 +9,7 @@ import {
   getDecksController,
   createCardInsideOfDeckController,
   getCardsInsideOfDeckController,
+  deleteCardController,
 } from "./controllers/index";
 
 const port = 5000;
@@ -23,6 +24,7 @@ app.get("/decks", getDecksController);
 app.post("/decks", createDeckController);
 app.post("/decks/:id/cards", createCardInsideOfDeckController);
 app.get("/decks/:id/cards", getCardsInsideOfDeckController);
+app.delete("/decks/:id/cards", deleteCardController);
 
 mongoose.connect(mongo_uri as string).then(() => {
   console.log(`connected on port ${port}`);
