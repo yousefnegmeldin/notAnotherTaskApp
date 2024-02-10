@@ -38,7 +38,7 @@ function App() {
 
   return (
     <div className="h-[100vh] justify-center items-center flex flex-col bg-slate-900">
-      <div className="w-3/4 flex gap-4 justify-center items-center mb-10">
+      <div className="w-3/4 flex flex-wrap gap-4 justify-center items-center mb-10">
         {deckArray.map((deck: deckObject) => {
           return (
             <div key={deck._id}>
