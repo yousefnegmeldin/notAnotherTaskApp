@@ -10,7 +10,7 @@ interface DeckProps {
 
 const Deck: FC<DeckProps> = ({ deckTitle, deckId, setShouldRefresh }) => {
   const handleDeleteDeck = () => {
-    deleteDeck(deckId).then(() => setShouldRefresh((prev) => !prev));
+    deleteDeck(deckId).then(() => setShouldRefresh(true));
   };
 
   return (

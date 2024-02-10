@@ -12,8 +12,7 @@ const DeckPage: FC = (): ReactNode => {
 
   const handleCardSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createCard(cardTitle, deckId!);
-    setShouldRefresh(true);
+    createCard(cardTitle, deckId!).then(()=>setShouldRefresh(true));
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +26,7 @@ const DeckPage: FC = (): ReactNode => {
   useEffect(() => {
     if (shouldRefresh) {
       setShouldRefresh(false);
+      console.log('yo');
       fetchCards().then((cards) => setCardArray([...cards]));
     }
   }, [shouldRefresh]);
