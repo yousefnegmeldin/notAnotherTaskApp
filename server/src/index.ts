@@ -12,7 +12,7 @@ import {
   deleteCardController,
 } from "./controllers/index";
 
-const port = 5000;
+const port = 3000;
 const mongo_uri = process.env.MONGO_URI;
 
 const app = express();
@@ -52,5 +52,5 @@ app.delete("/decks/:id/cards", deleteCardController);
 
 mongoose.connect(mongo_uri as string).then(() => {
   console.log(`connected on port ${port}`);
-  app.listen(port);
+  app.listen(port, "0.0.0.0");
 });
