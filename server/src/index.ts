@@ -18,9 +18,9 @@ const mongo_uri = process.env.MONGO_URI;
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: ["https://not-another-task-app.vercel.app/"],
+  origin: "https://not-another-task-app.vercel.app",
 };
-app.use(cors({ origin: "https://not-another-task-app.vercel.app/" }));
+app.use(cors(corsOptions));
 
 app.delete("/decks/:id", deleteDeckController);
 app.get("/decks", getDecksController);
