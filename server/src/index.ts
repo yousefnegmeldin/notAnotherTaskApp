@@ -17,11 +17,6 @@ const mongo_uri = process.env.MONGO_URI;
 
 const app = express();
 app.use(express.json());
-const corsOptions = {
-  origin: "https://not-another-task-app.vercel.app",
-};
-app.use(cors());
-
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
