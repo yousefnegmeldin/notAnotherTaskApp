@@ -17,7 +17,10 @@ const mongo_uri = process.env.MONGO_URI;
 
 const app = express();
 app.use(express.json());
-app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+};
+app.use(cors(corsOptions));
 
 app.delete("/decks/:id", deleteDeckController);
 app.get("/decks", getDecksController);
