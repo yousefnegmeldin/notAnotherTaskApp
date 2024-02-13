@@ -12,7 +12,7 @@ import {
   deleteCardController,
 } from "./controllers/index";
 
-const port = 3000;
+const port = 10000;
 const mongo_uri = process.env.MONGO_URI;
 
 const app = express();
