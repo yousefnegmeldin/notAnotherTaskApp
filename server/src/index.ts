@@ -20,7 +20,7 @@ app.use(express.json());
 const corsOptions = {
   origin: ["https://not-another-task-app.vercel.app/"],
 };
-app.use(cors());
+app.use(cors({ origin: "https://not-another-task-app.vercel.app/" }));
 
 app.delete("/decks/:id", deleteDeckController);
 app.get("/decks", getDecksController);
