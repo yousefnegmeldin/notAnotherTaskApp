@@ -12,21 +12,15 @@ import {
   deleteCardController,
 } from "./controllers/index";
 
-const port = 10000;
+const port = 8080;
 const mongo_uri = process.env.MONGO_URI;
 
 const app = express();
 app.use(express.json());
 app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://not-another-task-app.vercel.app"
-  );
+  res.header("Access-Control-Allow-Origin", "https://not-another-task-app.vercel.app");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With, X-Api-Key"
-  );
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With, X-Api-Key");
   res.header("Access-Control-Allow-Credentials", "true");
   if ("OPTIONS" === req.method) {
     res.sendStatus(200);
